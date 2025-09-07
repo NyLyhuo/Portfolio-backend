@@ -55,17 +55,21 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'tech_stack' => 'nullable|array',
             'tech_stack.*' => 'string',
             'github_link' => 'nullable|url',
             'live_link' => 'nullable|url',
-            'image' => 'nullable|string',
+            'image' => 'nullable|image|max:2048',
         ]);
 
-        $project->update($request->all());
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('projects', 'public');
+            $request->merge(['image' => $path]);
+        }
+        $project->update($validated);
 
         return response()->json([
             'message' => 'Project updated successfully.',
