@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('experiences', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('role');
             $table->string('company');
             $table->string('location')->nullable();
             $table->date('start_date');

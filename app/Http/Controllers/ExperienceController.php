@@ -21,7 +21,7 @@ class ExperienceController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
+            'role' => 'required|string|max:255',
             'company' => 'required|string|max:255',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
@@ -47,7 +47,7 @@ class ExperienceController extends Controller
     {
         $experience = Experience::findOrFail($id);
         $validated = $request->validate([
-            'title' => 'sometimes|required|string|max:255',
+            'role' => 'sometimes|required|string|max:255',
             'company' => 'sometimes|required|string|max:255',
             'start_date' => 'sometimes|required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
