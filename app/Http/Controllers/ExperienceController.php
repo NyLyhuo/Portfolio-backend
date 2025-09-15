@@ -25,9 +25,13 @@ class ExperienceController extends Controller
             'company' => 'required|string|max:255',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
+            'is_present' => 'boolean',
             'description' => 'nullable|string',
         ]);
 
+        if (!empty($validated['is_present']) && $validated['is_present']) {
+            $validated['end_date'] = null;
+        }
         $experience = Experience::create($validated);
         return response()->json($experience, 201);
     }
@@ -51,9 +55,13 @@ class ExperienceController extends Controller
             'company' => 'sometimes|required|string|max:255',
             'start_date' => 'sometimes|required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
+            'is_present' => 'boolean',
             'description' => 'nullable|string',
         ]);
 
+        if (!empty($validated['is_present']) && $validated['is_present']) {
+            $validated['end_date'] = null;
+        }
         $experience->update($validated);
         return response()->json($experience);
     }
